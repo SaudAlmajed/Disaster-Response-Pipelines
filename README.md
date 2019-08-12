@@ -27,16 +27,11 @@ git clone https://github.com/SaudAlmajed/Disaster-Response-Pipelines.git
 
 
 ## Built With
-Python 3.5+ (I used Python 3.7)
-Machine Learning Libraries: NumPy, SciPy, Pandas, Sciki-Learn
-Natural Language Process Libraries: NLTK
-SQLlite Database Libraqries: SQLalchemy
-Web App and Data Visualization: Flask, Plotly
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
+- Python 3.5+ (I used Python 3.7)
+- Machine Learning Libraries: NumPy, SciPy, Pandas, Sciki-Learn
+- Natural Language Process Libraries: NLTK
+- SQLlite Database Libraqries: SQLalchemy
+- Web App and Data Visualization: Flask, Plotly
 
 
 ## Acknowledgments
