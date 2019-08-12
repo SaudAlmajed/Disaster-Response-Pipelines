@@ -4,7 +4,9 @@ Data Science udacity project
 The Project is divided in the following :
 
 1- Data Processing, ETL Pipeline to extract data from source, clean data and save them in a proper databse structure
+
 2- Machine Learning Pipeline to train a model able to classify text message in categories
+
 3- Web App to show model results in real time.
 
 ## Getting Started
