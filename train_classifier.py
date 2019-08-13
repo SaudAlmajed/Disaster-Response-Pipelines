@@ -17,10 +17,21 @@ from sklearn.metrics import fbeta_score, classification_report
 from scipy.stats.mstats import gmean
 
 import nltk
-nltk.download('averaged_perceptron_tagger')
+nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
 def load_data(database_filepath):
     
+      """
+    Load Data Function
+    
+    Arguments:
+        database_filepath -> path to SQLite db
+        
+    Output:
+        X -> feature DataFrame
+        Y -> label DataFrame
+        category_names -> used for data visualization (app)
+    """
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table('df',engine)
     X = df['message']
@@ -67,6 +78,20 @@ def build_model():
     ])
 
     return model
+def multioutput_fscore(y_true,y_pred,beta=1):
+   
+    score_list = []
+    if isinstance(y_pred, pd.DataFrame) == True:
+        y_pred = y_pred.values
+    if isinstance(y_true, pd.DataFrame) == True:
+        y_true = y_true.values
+    for column in range(0,y_true.shape[1]):
+        score = fbeta_score(y_true[:,column],y_pred[:,column],beta,average='weighted')
+        score_list.append(score)
+    f1score_numpy = np.asarray(score_list)
+    f1score_numpy = f1score_numpy[f1score_numpy<1]
+    f1score = gmean(f1score_numpy)
+    return  f1score
 
 
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
@@ -91,15 +116,15 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    
     Y_pred = model.predict(X_test)
     
-    
+    multi_f1 = multioutput_fscore(Y_test,Y_pred, beta = 1)
     overall_accuracy = (Y_pred == Y_test).mean().mean()
 
+    print('F1 score (custom definition) {0:.2f}%\n'.format(multi_f1*100))
     print('Average overall accuracy {0:.2f}% \n'.format(overall_accuracy*100))
     
-
-    pass
 
 
 def save_model(model, model_filepath):
